@@ -1,0 +1,29 @@
+training.set: ./dataset/yelp2018/train.txt
+
+test.set: ./dataset/yelp2018/test.txt
+
+model:
+  name: GCLCP
+  type: graph
+
+item.ranking.topN: [10,20]
+
+embedding.size: 64
+max.epoch: 40
+batch.size: 2048
+learning.rate: 0.001
+reg.lambda: 0.0001
+
+GCLCP:
+  n_layer: 3
+  lambda: 0.7
+  gamma: 0.5
+  drop_rate: 0.005
+  temp: 0.2
+
+output: ./results/
+
+
+# yelp2018 GCLCP={'n_layer': 3, 'lambda': 0.7, 'gamma': 0.5, 'drop_rate': 0.005, 'aug_type': 1, 'temp': 0.2}
+# amazon-book GCLCP={'n_layer': 3, 'lambda': 3, 'gamma': 0.3, 'drop_rate': 0.04, 'aug_type': 1, 'temp': 0.2}
+# iFashion GCLCP={'n_layer': 3, 'lambda': 0.05, 'gamma': 0.3, 'drop_rate': 0.1, 'aug_type': 1, 'temp': 0.2}
