@@ -24,6 +24,6 @@ GCLCP:
 output: ./results/
 
 
-# yelp2018 GCLCP={'n_layer': 3, 'lambda': 0.7, 'gamma': 0.5, 'drop_rate': 0.005, 'aug_type': 1, 'temp': 0.2}
-# amazon-book GCLCP={'n_layer': 3, 'lambda': 3, 'gamma': 0.3, 'drop_rate': 0.04, 'aug_type': 1, 'temp': 0.2}
-# iFashion GCLCP={'n_layer': 3, 'lambda': 0.05, 'gamma': 0.3, 'drop_rate': 0.1, 'aug_type': 1, 'temp': 0.2}
+# yelp2018 GCLCP={'n_layer': 3, 'lambda': 0.7, 'gamma': 0.5, 'drop_rate': 0.01, 'aug_type': 1, 'temp': 0.2}
+# amazon-book GCLCP={'n_layer': 3, 'lambda': 2.5, 'gamma': 0.3, 'drop_rate': 0.04, 'aug_type': 1, 'temp': 0.2}
+# iFashion GCLCP={'n_layer': 3, 'lambda': 0.05, 'gamma': 0.5, 'drop_rate': 0.1, 'aug_type': 1, 'temp': 0.2}
