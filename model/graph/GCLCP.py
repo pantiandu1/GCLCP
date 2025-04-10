@@ -29,6 +29,7 @@ class GCLCP(GraphRecommender):
                 user_idx, pos_idx, neg_idx = batch
                 rec_user_emb, rec_item_emb = model()
                 user_emb, pos_item_emb, neg_item_emb = rec_user_emb[user_idx], rec_item_emb[pos_idx], rec_item_emb[neg_idx]
+                # rec_loss = bpr_loss(user_emb, pos_item_emb, neg_item_emb)
                 rec_loss = self.calculate_loss(user_emb, pos_item_emb)
                 cl_loss = self.cl_rate * model.cal_cl_loss([user_idx,pos_idx], dropped_adj1, dropped_adj2)
                 batch_loss =  rec_loss + l2_reg_loss(self.reg, user_emb, pos_item_emb) + cl_loss
@@ -94,12 +95,14 @@ class GCLCP_Encoder(nn.Module):
     def forward(self, perturbed_adj=None):
         ego_embeddings = torch.cat([self.embedding_dict['user_emb'], self.embedding_dict['item_emb']], 0)
         all_embeddings = []
-        for _ in range(self.n_layers):
+        for k in range(self.n_layers):
             if perturbed_adj is not None:
                 ego_embeddings = torch.sparse.mm(perturbed_adj, ego_embeddings)
             else:
                 ego_embeddings = torch.sparse.mm(self.sparse_norm_adj, ego_embeddings)
-            all_embeddings.append(ego_embeddings)
+            if k > 0:
+                all_embeddings.append(ego_embeddings)
+            # all_embeddings.append(ego_embeddings)
         all_embeddings = torch.stack(all_embeddings, dim=1)
         all_embeddings = torch.mean(all_embeddings, dim=1)
         user_all_embeddings, item_all_embeddings = torch.split(all_embeddings, [self.data.user_num, self.data.item_num])
@@ -113,4 +116,3 @@ class GCLCP_Encoder(nn.Module):
         view1 = torch.cat((user_view_1[u_idx],item_view_1[i_idx]),0)
         view2 = torch.cat((user_view_2[u_idx],item_view_2[i_idx]),0)
         return InfoNCE(view1,view2,self.temp)
-
